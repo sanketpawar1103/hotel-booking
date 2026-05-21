@@ -5,11 +5,14 @@ import com.hotel.book.model.Hotel;
 import com.hotel.book.repository.BookingRepository;
 import com.hotel.book.repository.Hotelrepository;
 import com.hotel.book.requestDTO.BookHotelRequestDTO;
+import com.hotel.book.responseDTO.BookingResponseDTO;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BookingService {
@@ -44,5 +47,20 @@ public class BookingService {
         Update update = new Update().inc("roomsBooked", bookHotelRequestDTO.rooms());
 
         mongoTemplate.updateFirst(query, update, Hotel.class);
+    }
+
+    public List<BookingResponseDTO> getBookings(String userID) {
+        List<Booking> bookings = bookingRepository.getBookingsByUserID(userID);
+        return bookings.stream().map(this::mapToDTO).toList();
+    }
+
+
+    private BookingResponseDTO mapToDTO(Booking booking) {
+
+        return new BookingResponseDTO(
+                booking.id(),
+                booking.hotelID(),
+                booking.noOfRoomsBooked()
+        );
     }
 }

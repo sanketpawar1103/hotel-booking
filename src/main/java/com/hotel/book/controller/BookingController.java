@@ -1,11 +1,12 @@
 package com.hotel.book.controller;
 
 import com.hotel.book.requestDTO.BookHotelRequestDTO;
+import com.hotel.book.responseDTO.BookingResponseDTO;
 import com.hotel.book.service.BookingService;
-import com.hotel.book.service.HotelService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,10 +36,13 @@ public class BookingController {
     }
 
     @GetMapping("/bookings")
-    public  void getBookings(@RequestHeader(value = "Authorization", required = false) String authHeader  ,
-                             @RequestBody BookHotelRequestDTO bookHotelRequestDTO ) {
+    public List<BookingResponseDTO> getBookings(@RequestHeader(value = "Authorization", required = false) String authHeader) {
 
         String username = "default user"; // later we'll extract this using jwt token
         String userID = "0" ; // extract userid from username
+
+        List<BookingResponseDTO> bookings = bookingService.getBookings(userID);
+
+        return bookings;
     }
 }
