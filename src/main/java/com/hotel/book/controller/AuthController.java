@@ -2,6 +2,7 @@ package com.hotel.book.controller;
 
 import com.hotel.book.model.User;
 import com.hotel.book.repository.UserRepository;
+import com.hotel.book.responseDTO.RegisterResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,14 +21,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String signUp(@RequestBody User user) {
+    public RegisterResponse signUp(@RequestBody User user) {
         logger.info("Signup request received for user: {}", user.name());
 
-        if (userRepository.existsByName(user.name())) {
-            return "User already exists";
+        if (userRepository.existsByNameAndPassword(user.name(), user.password())) {
+            return new RegisterResponse("User already exists");
         }
 
         userRepository.save(user);
-        return "User registered successfully";
+        return new RegisterResponse("User registered successfully");
     }
 }
