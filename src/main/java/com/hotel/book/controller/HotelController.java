@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,7 +25,10 @@ public class HotelController {
     public List<SearchHotelResponse> searchHotels(SearchCriteria searchCriteria) {
         logger.info(searchCriteria.city());
         String city = searchCriteria.city();
-        return hotelService.search(city);
+        List<SearchHotelResponse> search = hotelService.search(city);
+        if(search.isEmpty())
+            return List.of(new SearchHotelResponse("--", "--", "--"));
+        return search;
     }
 
 }
