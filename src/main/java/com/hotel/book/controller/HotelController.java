@@ -1,16 +1,16 @@
 package com.hotel.book.controller;
 
+import com.hotel.book.requestDTO.BookHotelRequestDTO;
 import com.hotel.book.requestDTO.SearchCriteria;
 import com.hotel.book.responseDTO.SearchHotelResponse;
 import com.hotel.book.service.HotelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -29,4 +29,20 @@ public class HotelController {
         return hotelService.search(city);
     }
 
+    @PostMapping("/bookings")
+    public ResponseEntity<Map<String, String>> bookHotelRooms(@RequestHeader(value = "Authorization", required = false) String authHeader  ,
+                                                              @RequestBody BookHotelRequestDTO bookHotelRequestDTO ) {
+
+        try{
+            String username = "default user"; // later we'll extract this using jwt token
+            String userID = "0" ; // extract userid from username
+
+            this.hotelService.bookRooms(userID, bookHotelRequestDTO);
+
+            return ResponseEntity.ok(Map.of("message", "Booking successful"));
+        } catch (Exception e) {
+            return ResponseEntity.ok(Map.of("message" , e.getMessage()));
+        }
+
+    }
 }
