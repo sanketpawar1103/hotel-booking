@@ -1,5 +1,5 @@
 spring:
   application:
     name: hotel-booking
-
-
+  mongodb:
+    uri: mongodb://localhost:27017/hotel_db
