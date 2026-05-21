@@ -55,12 +55,12 @@ public class HotelServiceImp implements HotelService {
             return;
         }
 
-        throw  new RuntimeException("no rooms left in this hotel");
+        throw  new RuntimeException("those many rooms are not left in this hotel");
     }
 
     private void updateRoomsAvailable(BookHotelRequestDTO bookHotelRequestDTO) {
         Query query = new Query(Criteria.where("id").is(bookHotelRequestDTO.hotel_id()));
-        Update update = new Update().inc("roomsBooked", -bookHotelRequestDTO.rooms());
+        Update update = new Update().inc("roomsBooked", bookHotelRequestDTO.rooms());
 
         mongoTemplate.updateFirst(query, update, Hotel.class);
     }
