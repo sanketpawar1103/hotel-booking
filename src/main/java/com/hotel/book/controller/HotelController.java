@@ -25,10 +25,7 @@ public class HotelController {
     public List<SearchHotelResponse> searchHotels(SearchCriteria searchCriteria) {
         logger.info(searchCriteria.city());
         String city = searchCriteria.city();
-        List<SearchHotelResponse> search = hotelService.search(city);
-        if(search.isEmpty())
-            return List.of(new SearchHotelResponse("--", "--", "--"));
-        return search;
+        return hotelService.search(city);
     }
 
 }
