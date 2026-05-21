@@ -1,4 +1,9 @@
 package com.hotel.book.service;
 
-public class HotelService {
+import com.hotel.book.responseDTO.SearchHotelResponse;
+
+import java.util.List;
+
+public interface HotelService {
+    List<SearchHotelResponse> search(String city);
 }
