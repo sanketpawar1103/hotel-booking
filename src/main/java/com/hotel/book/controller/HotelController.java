@@ -23,15 +23,10 @@ public class HotelController {
     }
 
     @GetMapping("/search/hotels")
-    public List<SearchHotelResponse> searchHotels(@RequestParam SearchCriteria searchCriteria) {
+    public List<SearchHotelResponse> searchHotels(SearchCriteria searchCriteria) {
         logger.info(searchCriteria.city());
         String city = searchCriteria.city();
-        List<SearchHotelResponse> hotelResponses = hotelService.search(city);
-
-        if (hotelResponses.isEmpty())
-            return List.of(new SearchHotelResponse("-","-","-"));
-
-        return hotelResponses;
+        return hotelService.search(city);
     }
 
 }
