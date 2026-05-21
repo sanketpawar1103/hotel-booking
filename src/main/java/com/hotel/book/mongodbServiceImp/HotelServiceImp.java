@@ -1,24 +1,19 @@
 package com.hotel.book.mongodbServiceImp;
 
-import com.hotel.book.repository.BookingRepository;
-import com.hotel.book.repository.Hotelrepository;
+import com.hotel.book.repository.HotelRepository;
+import com.hotel.book.responseDTO.BookingList;
 import com.hotel.book.responseDTO.SearchHotelResponse;
 import com.hotel.book.service.HotelService;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 
 @Service
 public class HotelServiceImp implements HotelService {
-    private final Hotelrepository hotelRepository;
-    private  final BookingRepository bookingRepository;
+    private final HotelRepository hotelRepository;
 
-    public HotelServiceImp(Hotelrepository hotelRepository, BookingRepository bookingRepository) {
+    public HotelServiceImp(HotelRepository hotelRepository) {
         this.hotelRepository = hotelRepository;
-
-        this.bookingRepository = bookingRepository;
-
     }
 
     @Override
@@ -29,5 +24,4 @@ public class HotelServiceImp implements HotelService {
                         new SearchHotelResponse(hotel.id(), hotel.name(), hotel.city())
                 ).toList();
     }
-
 }

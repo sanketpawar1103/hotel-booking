@@ -3,7 +3,7 @@ package com.hotel.book.service;
 import com.hotel.book.model.Booking;
 import com.hotel.book.model.Hotel;
 import com.hotel.book.repository.BookingRepository;
-import com.hotel.book.repository.Hotelrepository;
+import com.hotel.book.repository.HotelRepository;
 import com.hotel.book.requestDTO.BookHotelRequestDTO;
 import com.hotel.book.responseDTO.BookingResponseDTO;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -16,10 +16,10 @@ import java.util.List;
 
 @Service
 public class BookingService {
-    private final Hotelrepository hotelrepository;
+    private final HotelRepository hotelrepository;
     private final BookingRepository bookingRepository;
     private final MongoTemplate mongoTemplate;
-    public BookingService(Hotelrepository hotelrepository, BookingRepository bookingRepository, MongoTemplate mongoTemplate) {
+    public BookingService(HotelRepository hotelrepository, BookingRepository bookingRepository, MongoTemplate mongoTemplate) {
         this.hotelrepository = hotelrepository;
         this.bookingRepository = bookingRepository;
         this.mongoTemplate = mongoTemplate;
