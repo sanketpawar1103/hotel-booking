@@ -29,20 +29,4 @@ public class HotelController {
         return hotelService.search(city);
     }
 
-    @PostMapping("/bookings")
-    public ResponseEntity<Map<String, String>> bookHotelRooms(@RequestHeader(value = "Authorization", required = false) String authHeader  ,
-                                                              @RequestBody BookHotelRequestDTO bookHotelRequestDTO ) {
-
-        try{
-            String username = "default user"; // later we'll extract this using jwt token
-            String userID = "0" ; // extract userid from username
-
-            this.hotelService.bookRooms(userID, bookHotelRequestDTO);
-
-            return ResponseEntity.ok(Map.of("message", "Booking successful"));
-        } catch (Exception e) {
-            return ResponseEntity.ok(Map.of("message" , e.getMessage()));
-        }
-
-    }
 }
