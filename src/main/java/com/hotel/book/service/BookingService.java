@@ -4,7 +4,7 @@ import com.hotel.book.model.Booking;
 import com.hotel.book.model.Hotel;
 import com.hotel.book.model.User;
 import com.hotel.book.repository.BookingRepository;
-import com.hotel.book.repository.Hotelrepository;
+import com.hotel.book.repository.HotelRepository;
 import com.hotel.book.repository.UserRepository;
 import com.hotel.book.requestDTO.BookHotelRequestDTO;
 import com.hotel.book.responseDTO.BookingResponseDTO;
@@ -22,13 +22,14 @@ import java.util.List;
 
 @Service
 public class BookingService {
-    private final Hotelrepository hotelrepository;
+    private final HotelRepository hotelRepository;
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
     private final MongoTemplate mongoTemplate;
 
-    public BookingService(Hotelrepository hotelrepository, BookingRepository bookingRepository, UserRepository userRepository, MongoTemplate mongoTemplate) {
-        this.hotelrepository = hotelrepository;
+    public BookingService(HotelRepository hotelRepository,
+                          BookingRepository bookingRepository, UserRepository userRepository, MongoTemplate mongoTemplate) {
+        this.hotelRepository = hotelRepository;
         this.bookingRepository = bookingRepository;
         this.userRepository = userRepository;
         this.mongoTemplate = mongoTemplate;
@@ -36,7 +37,8 @@ public class BookingService {
 
     public void bookRooms(String userID, BookHotelRequestDTO bookHotelRequestDTO) throws  RuntimeException{
 
-        Hotel hotel = hotelrepository.getHotelById(bookHotelRequestDTO.hotel_id());
+        Hotel hotel =
+                hotelRepository.getHotelById(bookHotelRequestDTO.hotel_id());
 
         int available = hotel.totalRooms() - hotel.roomsBooked();
         boolean areRoomsAvailable = available >= bookHotelRequestDTO.rooms();
@@ -73,11 +75,10 @@ public class BookingService {
         );
     }
 
-
     public ByteArrayInputStream generateReceiptPdf(String id) {
         Booking booking = bookingRepository.getBookingById(id);
         User user = userRepository.getUserById(booking.userID());
-        Hotel hotel = hotelrepository.getHotelById(booking.hotelID());
+        Hotel hotel = hotelRepository.getHotelById(booking.hotelID());
 
         Document document = new Document();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

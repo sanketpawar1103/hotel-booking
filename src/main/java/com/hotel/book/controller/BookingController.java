@@ -2,6 +2,7 @@ package com.hotel.book.controller;
 
 import com.hotel.book.requestDTO.BookHotelRequestDTO;
 import com.hotel.book.responseDTO.BookingResponseDTO;
+import com.hotel.book.security.JwtService;
 import com.hotel.book.service.BookingService;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -17,20 +18,19 @@ import java.util.Map;
 @RequestMapping("/api")
 public class BookingController {
     private final BookingService bookingService;
+    private final JwtService jwtService;
 
-    public BookingController(BookingService bookingService) {
+    public BookingController(BookingService bookingService, JwtService jwtService) {
         this.bookingService = bookingService;
+        this.jwtService = jwtService;
     }
 
-
     @PostMapping("/bookings")
-    public ResponseEntity<Map<String, String>> bookHotelRooms(@RequestHeader(value = "Authorization", required = false) String authHeader  ,
+    public ResponseEntity<Map<String, String>> bookHotelRooms(@RequestHeader(value = "Authorization") String authHeader  ,
                                                               @RequestBody BookHotelRequestDTO bookHotelRequestDTO ) {
         try{
-            String username = "default user"; // later we'll extract this using jwt token
-            String userID = "0" ; // extract userid from username
-
-            this.bookingService.bookRooms(userID, bookHotelRequestDTO);
+            String userId = getUserId(authHeader);
+            this.bookingService.bookRooms(userId, bookHotelRequestDTO);
 
             return ResponseEntity.ok(Map.of("message", "Booking successful"));
         } catch (Exception e) {
@@ -40,14 +40,21 @@ public class BookingController {
     }
 
     @GetMapping("/bookings")
-    public List<BookingResponseDTO> getBookings(@RequestHeader(value = "Authorization", required = false) String authHeader) {
+    public List<BookingResponseDTO> getBookings(@RequestHeader(value = "Authorization") String authHeader) {
+        try {
+            String userId = getUserId(authHeader);
+            return bookingService.getBookings(userId);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 
-        String username = "default user"; // later we'll extract this using jwt token
-        String userID = "0" ; // extract userid from username
-
-        List<BookingResponseDTO> bookings = bookingService.getBookings(userID);
-
-        return bookings;
+    private String getUserId(String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            return jwtService.extractUserId(token);
+        }
+        throw new RuntimeException("Unauthorized user. Login first");
     }
 
     @GetMapping("/bookings/{id}/receipt.pdf")
