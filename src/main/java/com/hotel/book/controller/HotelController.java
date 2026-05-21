@@ -27,5 +27,10 @@ public class HotelController {
         String city = searchCriteria.city();
         return hotelService.search(city);
     }
-
+//
+//    @GetMapping("/bookings")
+//    public List<BookingList> bookingLists(@RequestHeader(value = "Authorization", required = false) User user) {
+//        logger.info("booking request comes");
+//        return hotelService.listBooking(user.id());
+//    }
 }
