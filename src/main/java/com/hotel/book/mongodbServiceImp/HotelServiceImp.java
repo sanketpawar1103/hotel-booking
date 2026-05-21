@@ -45,11 +45,12 @@ public class HotelServiceImp implements HotelService {
 
         Hotel hotel = hotelRepository.getHotelById(bookHotelRequestDTO.hotel_id());
 
-        updateRoomsAvailable(bookHotelRequestDTO);
+        int available = hotel.totalRooms() - hotel.roomsBooked();
+        boolean areRoomsAvailable = available >= bookHotelRequestDTO.rooms();
 
-        Boolean areRoomsAvailable = hotel.roomsBooked() < hotel.totalRooms();
-        if(areRoomsAvailable) {
+        if (areRoomsAvailable) {
             Booking booking = new Booking(null, userID, bookHotelRequestDTO.hotel_id(), bookHotelRequestDTO.rooms());
+            updateRoomsAvailable(bookHotelRequestDTO);
             bookingRepository.save(booking);
             return;
         }
