@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface HotelService {
     List<SearchHotelResponse> search(String city);
-
 }

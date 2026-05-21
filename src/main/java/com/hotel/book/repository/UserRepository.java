@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
     boolean existsByNameAndPassword(String name, String password);
+
+    User getUserById(String id);
 }

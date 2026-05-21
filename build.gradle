@@ -21,6 +21,7 @@ dependencies {
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'com.github.librepdf:openpdf:2.0.3'
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-mongodb-test'
 //	testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
