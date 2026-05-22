@@ -1,5 +1,6 @@
 package com.hotel.book.exception;
 
+import com.hotel.book.responseDTO.ExceptionResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+    public ResponseEntity<ExceptionResponse> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(ex.getMessage()));
     }
 }

@@ -1,8 +1,5 @@
 package com.hotel.book.controller;
 
-import com.hotel.book.model.User;
-import com.hotel.book.mongodbServiceImp.UserServiceImpl;
-import com.hotel.book.repository.UserRepository;
 import com.hotel.book.requestDTO.LoginRequest;
 import com.hotel.book.requestDTO.RegisterRequest;
 import com.hotel.book.responseDTO.LoginResponse;
@@ -10,8 +7,10 @@ import com.hotel.book.responseDTO.RegisterResponse;
 import com.hotel.book.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/users")
