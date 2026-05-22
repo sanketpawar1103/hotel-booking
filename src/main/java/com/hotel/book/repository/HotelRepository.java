@@ -10,5 +10,8 @@ import java.util.List;
 @Repository
 public interface HotelRepository extends MongoRepository<Hotel, String> {
     List<Hotel> findByCity(String city);
+<<<<<<< Updated upstream
     Hotel getHotelById(String id);
+=======
+>>>>>>> Stashed changes
 }

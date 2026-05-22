@@ -1,13 +1,14 @@
 package com.hotel.book.controller;
 
+import com.hotel.book.model.User;
 import com.hotel.book.requestDTO.SearchCriteria;
+import com.hotel.book.responseDTO.BookingList;
 import com.hotel.book.responseDTO.SearchHotelResponse;
 import com.hotel.book.service.HotelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 

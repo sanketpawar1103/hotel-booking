@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 public class HotelServiceImp implements HotelService {
     private final HotelRepository hotelRepository;
-
     public HotelServiceImp(HotelRepository hotelRepository) {
         this.hotelRepository = hotelRepository;
     }
@@ -24,4 +23,11 @@ public class HotelServiceImp implements HotelService {
                         new SearchHotelResponse(hotel.id(), hotel.name(), hotel.city())
                 ).toList();
     }
+
+    @Override
+    public List<BookingList> listBooking(String id) {
+        return List.of();
+    }
+
+
 }
